@@ -15,12 +15,11 @@
   --bg:#f5f4f1;--card:#fff;--border:#e8e5df;--text:#1a1a18;--muted:#888880;
   --subtle:#f0ede8;--green:#1a7a50;--green-l:#e8f5ee;--green-m:#3da874;
   --blue:#1a5fa8;--amber:#b56c0a;--amber-l:#fef3e2;--red:#c0392b;--red-l:#fee8e8;
-  --gold:#c9901a;--gold-l:#fef8ed;--edit:#e8f0fb;
+  --gold:#c9901a;--gold-l:#fef8ed;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',-apple-system,sans-serif;padding-bottom:50px;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',-apple-system,sans-serif;padding-bottom:60px;}
 
-/* Header */
 .hdr{background:var(--green);padding:52px 20px 32px;position:relative;overflow:hidden;}
 .hdr::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.06);}
 .hdr::after{content:'';position:absolute;bottom:-28px;left:0;right:0;height:56px;background:var(--bg);border-radius:36px 36px 0 0;}
@@ -33,7 +32,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',-apple-system,
 .hdr-total-val{font-size:36px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;margin-top:10px;}
 .hdr-total-sub{font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px;}
 
-/* Nav */
 .nav{display:flex;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
 .nav-tab{flex:1;padding:12px 8px;font-size:13px;font-family:inherit;border:none;background:transparent;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;}
 .nav-tab.active{color:var(--green);border-bottom-color:var(--green);font-weight:500;}
@@ -41,13 +39,11 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',-apple-system,
 .page{display:none;padding:12px 14px 0;}
 .page.active{display:block;}
 
-/* Card */
 .card{background:var(--card);border-radius:16px;border:1px solid var(--border);padding:16px;margin-bottom:10px;}
 .card.edit-mode{border-color:#5a9fe0;background:#fafdff;}
 .card-title{font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
 .edit-hint{font-size:10px;color:var(--blue);font-weight:400;letter-spacing:0;}
 
-/* Edit fields */
 .field-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
 .field-row:last-child{border-bottom:none;padding-bottom:0;}
 .field-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
@@ -59,39 +55,42 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',-apple-system,
 .field-pnl{font-size:11px;margin-top:1px;}
 .pup{color:var(--green);}.pdn{color:var(--red);}.pfl{color:var(--muted);}
 
-/* Editable input */
-.edit-input{
+/* Stable edit input — NEVER destroyed while user types */
+.ei{
   font-size:14px;font-weight:600;font-family:inherit;
   border:1.5px solid #5a9fe0;border-radius:8px;
-  padding:5px 8px;text-align:right;
+  padding:6px 8px;text-align:right;
   background:#fff;color:var(--text);
-  width:110px;outline:none;
+  width:100%;outline:none;
   font-variant-numeric:tabular-nums;
+  -webkit-appearance:none;
 }
-.edit-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(90,159,224,0.15);}
-.edit-label{font-size:10px;color:var(--blue);margin-top:2px;text-align:right;}
+.ei:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(90,159,224,0.15);}
+.el{font-size:10px;color:var(--blue);margin-top:3px;text-align:right;}
+.el2{font-size:10px;color:var(--blue);margin-bottom:3px;}
 
-/* Stock rows */
+/* Edit block layout for array items */
+.eblock{padding:10px 0;border-bottom:1px solid var(--border);}
+.eblock:last-child{border-bottom:none;}
+.erow1{display:flex;gap:6px;align-items:center;margin-bottom:8px;}
+.erow2{display:flex;gap:6px;}
+.ecol{flex:1;min-width:0;}
+
 .stock-row{display:flex;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);}
-.stock-row:last-child{border-bottom:none;padding-bottom:0;}
+.stock-row:last-child{border-bottom:none;}
 .stock-ticker{font-size:11px;font-weight:600;color:var(--muted);min-width:48px;}
 .stock-name{font-size:12px;color:var(--text);flex:1;}
-.stock-right{text-align:right;}
 .stock-pnl{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;}
 .stock-pct{font-size:11px;font-variant-numeric:tabular-nums;}
-.pnl-edit-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
 
-/* Currency toggle */
 .cur-toggle{display:flex;background:var(--subtle);border-radius:10px;padding:3px;margin-bottom:12px;}
 .cur-btn{flex:1;padding:7px;border-radius:8px;border:none;background:transparent;font-size:12px;font-family:inherit;color:var(--muted);cursor:pointer;}
 .cur-btn.active{background:var(--card);color:var(--text);font-weight:500;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
 
-/* Progress */
 .prog-track{background:var(--subtle);border-radius:99px;height:10px;overflow:hidden;margin:8px 0 6px;}
 .prog-fill{height:100%;border-radius:99px;background:var(--green-m);transition:width 0.4s;}
 .prog-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);}
 
-/* Metrics */
 .m2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
 .mc{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:13px 14px;}
 .mc-l{font-size:11px;color:var(--muted);margin-bottom:5px;}
@@ -99,13 +98,11 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',-apple-system,
 .mc-s{font-size:11px;margin-top:2px;}
 .c-g{color:var(--green);}.c-b{color:var(--blue);}.c-a{color:var(--amber);}.c-r{color:var(--red);}.c-m{color:var(--muted);}
 
-/* Sliders */
 .sl-row{margin-bottom:18px;}
 .sl-row:last-child{margin-bottom:0;}
 .sl-top{display:flex;justify-content:space-between;margin-bottom:8px;}
 .sl-name{font-size:13px;color:var(--text);}
 .sl-val{font-size:14px;font-weight:600;color:var(--green);font-variant-numeric:tabular-nums;}
-.sl-val.warn{color:var(--amber);}.sl-val.danger{color:var(--red);}
 input[type=range]{width:100%;-webkit-appearance:none;height:6px;background:var(--subtle);border-radius:3px;outline:none;}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--green-m);box-shadow:0 2px 8px rgba(29,158,117,0.3);cursor:pointer;}
 .risk-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:6px;margin-top:6px;font-weight:500;}
@@ -113,7 +110,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
 .rt-mid{background:var(--amber-l);color:var(--amber);}
 .rt-high{background:var(--red-l);color:var(--red);}
 
-/* Year strip */
 .yr-strip{display:flex;gap:8px;overflow-x:auto;padding:0 0 8px;margin:0 -16px;padding-left:16px;-webkit-overflow-scrolling:touch;}
 .yr-strip::-webkit-scrollbar{display:none;}
 .yc{background:var(--subtle);border-radius:12px;padding:10px 12px;min-width:108px;flex-shrink:0;position:relative;overflow:hidden;}
@@ -124,7 +120,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
 .yc-tag{font-size:9px;background:var(--green-l);color:var(--green);padding:1px 4px;border-radius:3px;margin-left:2px;}
 .yc-ln{font-size:11px;margin-bottom:1px;}
 
-/* Chart */
 .chart-wrap{height:190px;position:relative;margin-top:6px;}
 .tabs2{display:flex;gap:6px;margin-bottom:12px;}
 .tab2{flex:1;padding:8px;border-radius:9px;border:1px solid var(--border);background:transparent;font-size:12px;font-family:inherit;color:var(--muted);cursor:pointer;}
@@ -138,8 +133,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
 .save-btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;}
 .update-time{text-align:center;font-size:11px;color:var(--muted);padding:14px 0 4px;}
 .add-btn{background:var(--green-l);border:1px dashed var(--green-m);color:var(--green);font-size:12px;font-family:inherit;padding:8px;border-radius:10px;width:100%;cursor:pointer;margin-top:8px;}
-.del-btn{background:var(--red-l);border:none;color:var(--red);font-size:16px;padding:4px 8px;border-radius:6px;cursor:pointer;flex-shrink:0;}
+.del-btn{background:var(--red-l);border:none;color:var(--red);font-size:16px;padding:4px 10px;border-radius:6px;cursor:pointer;flex-shrink:0;}
 .section-sub{font-size:11px;font-weight:600;letter-spacing:0.06em;color:var(--muted);margin:12px 0 8px;}
+.name-inp{border:1.5px solid #5a9fe0;border-radius:8px;padding:6px 10px;font-size:13px;font-family:inherit;outline:none;background:#fff;flex:1;min-width:0;}
+.ticker-inp{border:1.5px solid #5a9fe0;border-radius:6px;padding:5px 6px;font-size:11px;font-weight:600;font-family:inherit;outline:none;background:#fff;width:52px;text-align:center;flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -149,7 +146,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
     <div>
       <div class="hdr-badge">🌿 Yvonne Portfolio</div>
       <div class="hdr-name">我的资产总览</div>
-      <div class="hdr-sub">点右上角编辑 · 修改随时保存</div>
+      <div class="hdr-sub">点右上角编辑 · 数据实时联动</div>
     </div>
     <button class="edit-btn" id="editToggle" onclick="toggleEdit()">✏️ 编辑</button>
   </div>
@@ -174,7 +171,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
   <!-- 现金 -->
   <div class="card" id="card-cash">
     <div class="card-title">💵 现金储备 <span class="edit-hint" id="hint-cash"></span></div>
-    <div class="field-row">
+    <div class="field-row" style="border-bottom:none;padding-bottom:0">
       <div class="field-icon" style="background:#f0ede8">🏦</div>
       <div class="field-info">
         <div class="field-name">余额宝 + 银行存款</div>
@@ -189,12 +186,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
     <div class="card-title">💱 汇率设置 <span class="edit-hint" id="hint-fx"></span></div>
     <div class="field-row">
       <div class="field-icon" style="background:#e8f0fb">🇺🇸</div>
-      <div class="field-info"><div class="field-name">USD / CNY</div></div>
+      <div class="field-info"><div class="field-name">USD / CNY</div><div class="field-sub">美元兑人民币</div></div>
       <div id="fxUsdDisplay"></div>
     </div>
-    <div class="field-row">
+    <div class="field-row" style="border-bottom:none;padding-bottom:0">
       <div class="field-icon" style="background:#fee8e8">🇭🇰</div>
-      <div class="field-info"><div class="field-name">HKD / CNY</div></div>
+      <div class="field-info"><div class="field-name">HKD / CNY</div><div class="field-sub">港元兑人民币</div></div>
       <div id="fxHkdDisplay"></div>
     </div>
   </div>
@@ -204,6 +201,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
     <div class="card-title">📱 支付宝投资 <span class="edit-hint" id="hint-alipay"></span></div>
     <div id="alipayList"></div>
     <button class="add-btn" id="addAlipayBtn" style="display:none" onclick="addAlipayItem()">+ 添加持仓</button>
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:12px;color:var(--muted)">支付宝合计</span>
+      <span style="font-size:16px;font-weight:600" id="alipaySum">--</span>
+    </div>
   </div>
 
   <!-- moomoo -->
@@ -212,17 +214,22 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
     <div class="section-sub">🇺🇸 美股</div>
     <div id="usList"></div>
     <button class="add-btn" id="addUsBtn" style="display:none" onclick="addStock('us')">+ 添加美股</button>
+    <div id="usMktValRow"></div>
     <div class="section-sub" style="margin-top:12px">🇭🇰 港股</div>
     <div id="hkList"></div>
     <button class="add-btn" id="addHkBtn" style="display:none" onclick="addStock('hk')">+ 添加港股</button>
+    <div id="hkMktValRow"></div>
     <div class="divider"></div>
     <div style="display:flex;justify-content:space-between;align-items:center">
       <span style="font-size:12px;color:var(--muted)">moomoo现金 (USD)</span>
       <div id="mooCashDisplay"></div>
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:2px solid var(--border)">
-      <span style="font-size:13px;color:var(--muted)">moomoo合计</span>
-      <div style="text-align:right"><div id="mooTotal" style="font-size:16px;font-weight:600"></div><div id="mooCNY" style="font-size:11px;color:var(--muted)"></div></div>
+      <span style="font-size:13px;font-weight:500;color:var(--muted)">moomoo合计</span>
+      <div style="text-align:right">
+        <div id="mooTotal" style="font-size:16px;font-weight:600"></div>
+        <div id="mooCNY" style="font-size:11px;color:var(--muted)"></div>
+      </div>
     </div>
   </div>
 
@@ -234,7 +241,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
       <div class="field-info"><div class="field-name">目标资产</div><div class="field-sub">入职时希望达到</div></div>
       <div id="targetDisplay"></div>
     </div>
-    <div class="field-row">
+    <div class="field-row" style="border-bottom:none;padding-bottom:0">
       <div class="field-icon" style="background:#fef3e2">📅</div>
       <div class="field-info"><div class="field-name">距入职剩余月数</div><div class="field-sub">2027年8月入职</div></div>
       <div id="monthsDisplay"></div>
@@ -257,12 +264,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
       <div class="field-info"><div class="field-name">易方达黄金ETF联接A</div></div>
       <div id="dca1Display"></div>
     </div>
-    <div class="field-row">
+    <div class="field-row" style="border-bottom:none;padding-bottom:0">
       <div class="field-info"><div class="field-name">易方达黄金ETF联接C</div></div>
       <div id="dca2Display"></div>
     </div>
-    <div class="field-row" style="background:var(--gold-l);border-radius:10px;padding:10px 12px;margin-top:4px;border:none;">
-      <div class="field-info"><div class="field-name" style="font-weight:600">每周合计</div></div>
+    <div style="background:var(--gold-l);border-radius:10px;padding:10px 12px;margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+      <div class="field-name" style="font-weight:600">每周合计</div>
       <div style="font-size:20px;font-weight:700;color:var(--gold)" id="dcaTotal"></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
@@ -276,7 +283,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
       </div>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">📋 持仓策略备忘</div>
     <div style="font-size:13px;color:var(--text);line-height:2.2">
@@ -288,7 +294,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
       <div>💡 剩余50%设 +150% 再清仓</div>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">🗓 年内关键节奏</div>
     <div style="font-size:13px;color:var(--text);line-height:2.2">
@@ -349,39 +354,37 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
       <button class="tab2 active" onclick="switchChartTab(this,'growth')">资产增长</button>
       <button class="tab2" onclick="switchChartTab(this,'flow')">资金流向</button>
     </div>
-    <div class="chart-wrap"><canvas id="planChart" role="img" aria-label="五年资产增长图"></canvas></div>
+    <div class="chart-wrap"><canvas id="planChart"></canvas></div>
   </div>
   <div class="note">📌 前三年薪资固定，第4年起涨薪。起点含入职前目标资产。年化20%属进取假设，需持续跑赢市场。</div>
   </div>
 </div>
 
-<!-- Save bar -->
 <div class="save-bar" id="saveBar">
-  <button class="save-btn" onclick="saveData()">💾 保存修改</button>
+  <button class="save-btn" id="saveBtn" onclick="saveData()">💾 保存修改</button>
 </div>
 
 <script>
 const USD_CNY_DEFAULT=7.25, HKD_CNY_DEFAULT=0.930;
 
-// Default data
 const DEFAULT={
   cash:15000,
   fxUsd:7.25, fxHkd:0.930,
   targetAsset:130000, monthsToWork:14,
   alipay:[
-    {name:'黄金ETF（易方达A+C）',sub:'每周定投676元',icon:'🥇',bg:'#fef8ed',val:28257,pnl:957,pct:2.5,up:true},
-    {name:'恒生科技ETF',sub:'易方达C+天弘C',icon:'📉',bg:'#fee8e8',val:1384,pnl:-427,pct:-23.6,up:false},
-    {name:'有色金属主题ETF',sub:'天弘中证工业',icon:'⚙️',bg:'#fef3e2',val:3038,pnl:-162,pct:-5.1,up:false},
+    {name:'黄金ETF（易方达A+C）',sub:'每周定投676元',icon:'🥇',bg:'#fef8ed',val:28257,pnl:957,pct:2.5},
+    {name:'恒生科技ETF',sub:'易方达C+天弘C',icon:'📉',bg:'#fee8e8',val:1384,pnl:-427,pct:-23.6},
+    {name:'有色金属主题ETF',sub:'天弘中证工业',icon:'⚙️',bg:'#fef3e2',val:3038,pnl:-162,pct:-5.1},
   ],
   us:[
-    {ticker:'MU',name:'美光科技',pnl:140.54,pct:17.79,up:true},
-    {ticker:'TSM',name:'台积电',pnl:13.32,pct:3.24,up:true},
-    {ticker:'RKLB',name:'Rocket Lab',pnl:32.87,pct:27.96,up:true},
-    {ticker:'KPLT',name:'Katapult',pnl:-64.29,pct:-62.90,up:false},
+    {ticker:'MU',name:'美光科技',pnl:140.54,pct:17.79},
+    {ticker:'TSM',name:'台积电',pnl:13.32,pct:3.24},
+    {ticker:'RKLB',name:'Rocket Lab',pnl:32.87,pct:27.96},
+    {ticker:'KPLT',name:'Katapult',pnl:-64.29,pct:-62.90},
   ],
   usMktVal:1542.87,
   hk:[
-    {ticker:'07709',name:'南方2x做多海力士',pnl:4238,pct:47.03,up:true},
+    {ticker:'07709',name:'南方2x做多海力士',pnl:4238,pct:47.03},
   ],
   hkMktVal:13261,
   mooCash:775.76,
@@ -393,22 +396,21 @@ let D={}, editMode=false, curMode='cny', chartInst=null, chartTab='growth';
 
 function loadData(){
   try{
-    const s=localStorage.getItem('yvonne_portfolio');
+    const s=localStorage.getItem('yvonne_v3');
     if(s) D=JSON.parse(s);
     else D=JSON.parse(JSON.stringify(DEFAULT));
-  } catch(e){ D=JSON.parse(JSON.stringify(DEFAULT)); }
+  }catch(e){ D=JSON.parse(JSON.stringify(DEFAULT)); }
 }
+
 function saveData(){
   D.updateDate=new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'});
-  localStorage.setItem('yvonne_portfolio',JSON.stringify(D));
-  // Exit edit mode
+  localStorage.setItem('yvonne_v3',JSON.stringify(D));
   editMode=false;
   document.getElementById('editToggle').textContent='✏️ 编辑';
   document.getElementById('editToggle').classList.remove('active');
   document.getElementById('saveBar').style.display='none';
   renderAll();
-  // Feedback
-  const btn=document.getElementById('saveBar').querySelector('button');
+  const btn=document.getElementById('saveBtn');
   btn.textContent='✅ 已保存！';
   setTimeout(()=>{ btn.textContent='💾 保存修改'; },1500);
 }
@@ -423,194 +425,241 @@ function toggleEdit(){
 }
 
 function calcTotal(){
-  const mooCNY=(D.usMktVal+D.mooCash)*(D.fxUsd||USD_CNY_DEFAULT)+D.hkMktVal*(D.fxHkd||HKD_CNY_DEFAULT);
-  const aliTotal=D.alipay.reduce((s,i)=>s+i.val,0);
-  return D.cash+aliTotal+mooCNY;
+  const fx=D.fxUsd||USD_CNY_DEFAULT, hkfx=D.fxHkd||HKD_CNY_DEFAULT;
+  const mooCNY=(+D.usMktVal+ +D.mooCash)*fx+(+D.hkMktVal)*hkfx;
+  const aliTotal=D.alipay.reduce((s,i)=>s+(+i.val||0),0);
+  return (+D.cash||0)+aliTotal+mooCNY;
 }
 
 function fW(n,d=1){return (n/10000).toFixed(d)+'万';}
 function fW0(n){return Math.round(n/10000)+'万';}
 function fCNY(n){return '¥'+Math.round(n).toLocaleString('zh-CN');}
 
-function editInput(key,val,label,step='1'){
-  if(!editMode) return `<div class="field-val">${val}</div>`;
-  return `<div><input class="edit-input" type="number" step="${step}" value="${typeof D[key]==='number'?D[key]:parseFloat(val.replace(/[^0-9.-]/g,''))}" oninput="D['${key}']=parseFloat(this.value)||0;renderAll()"><div class="edit-label">${label}</div></div>`;
+// ─── refreshCalc ─────────────────────────────────────────────────────
+// Only updates calculated/display elements. Never touches input fields.
+// Safe to call from oninput — inputs stay focused on mobile.
+function refreshCalc(){
+  const fx=D.fxUsd||USD_CNY_DEFAULT, hkfx=D.fxHkd||HKD_CNY_DEFAULT;
+  const total=calcTotal();
+
+  // Header
+  document.getElementById('hdrTotal').textContent=fW(total);
+  const target=D.targetAsset||130000, gap=target-total;
+  document.getElementById('hdrSub').textContent=
+    `当前约${fW(total)} · 目标${fW0(target)} · 差${gap>0?fW0(gap):'达成🎉'}`;
+
+  // Alipay sum (stable element, safe to update)
+  const aliSum=D.alipay.reduce((s,i)=>s+(+i.val||0),0);
+  const aliSumEl=document.getElementById('alipaySum');
+  if(aliSumEl) aliSumEl.textContent=fCNY(aliSum);
+
+  // moomoo total
+  const mooVal=(+D.usMktVal+ +D.mooCash)*fx+(+D.hkMktVal)*hkfx;
+  const mooTotalEl=document.getElementById('mooTotal');
+  const mooCNYEl=document.getElementById('mooCNY');
+  if(mooTotalEl) mooTotalEl.textContent='¥'+Math.round(mooVal).toLocaleString();
+  if(mooCNYEl) mooCNYEl.textContent=curMode==='orig'?
+    '$'+(+D.usMktVal+ +D.mooCash).toFixed(2)+' + HK$'+(+D.hkMktVal).toLocaleString():
+    'moomoo人民币合计';
+
+  // In view mode, also refresh the mkt val displays (they are not inputs)
+  if(!editMode){
+    const r1=document.getElementById('usMktValRow');
+    if(r1) r1.innerHTML=`<div class="divider"></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--muted)">美股总市值</span><span style="font-size:14px;font-weight:600">${curMode==='orig'?'$'+(+D.usMktVal).toFixed(2):'¥'+Math.round((+D.usMktVal)*fx).toLocaleString()}</span></div>`;
+    const r2=document.getElementById('hkMktValRow');
+    if(r2) r2.innerHTML=`<div class="divider"></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--muted)">港股总市值</span><span style="font-size:14px;font-weight:600">${curMode==='orig'?'HK$'+(+D.hkMktVal).toLocaleString():'¥'+Math.round((+D.hkMktVal)*hkfx).toLocaleString()}</span></div>`;
+    const mc=document.getElementById('mooCashDisplay');
+    if(mc) mc.innerHTML=`<span style="font-size:14px;font-weight:600">${curMode==='orig'?'$'+(+D.mooCash).toFixed(2):'¥'+Math.round((+D.mooCash)*fx).toLocaleString()}</span>`;
+  }
+
+  // Target progress
+  const mo=+D.monthsToWork||14;
+  document.getElementById('preWorkFill').style.width=Math.min(100,total/target*100)+'%';
+  document.getElementById('prePct').textContent=Math.round(Math.min(100,total/target*100))+'%';
+  document.getElementById('preGap').textContent=gap>0?fW0(gap):'已达成🎉';
+  document.getElementById('monthNeed').textContent=gap>0?fW0(gap/mo)+'/月':'--';
+
+  // DCA totals
+  const d1=+D.dca1||0, d2=+D.dca2||0, dt=d1+d2;
+  document.getElementById('dcaTotal').textContent='¥'+dt+'/周';
+  document.getElementById('dcaMonthly').textContent='¥'+Math.round(dt*4.33).toLocaleString();
+  document.getElementById('dcaYearly').textContent='¥'+Math.round(dt*52).toLocaleString();
+
+  document.getElementById('updateTime').textContent=
+    '数据更新于 '+(D.updateDate||'--')+' · USD¥'+(D.fxUsd||7.25)+' HKD¥'+(D.fxHkd||0.930);
 }
 
+// ─── renderAll ───────────────────────────────────────────────────────
+// Called only on mode switch or add/delete. Rebuilds DOM, then calls refreshCalc.
 function renderAll(){
-  const total=calcTotal();
-  document.getElementById('hdrTotal').textContent=fW(total);
+  const fx=D.fxUsd||USD_CNY_DEFAULT, hkfx=D.fxHkd||HKD_CNY_DEFAULT;
 
-  // Edit card borders
   ['cash','fx','alipay','moo','target','dca'].forEach(k=>{
     const c=document.getElementById('card-'+k);
     if(c) c.classList.toggle('edit-mode',editMode);
     const h=document.getElementById('hint-'+k);
-    if(h) h.textContent=editMode?'点击数字可修改':'';
+    if(h) h.textContent=editMode?'↑ 直接修改数字':'';
   });
   document.getElementById('addAlipayBtn').style.display=editMode?'block':'none';
   document.getElementById('addUsBtn').style.display=editMode?'block':'none';
   document.getElementById('addHkBtn').style.display=editMode?'block':'none';
 
-  // Header sub
-  const target=D.targetAsset||130000, months=D.monthsToWork||14;
-  const gap=target-total, pct=Math.min(100,total/target*100);
-  document.getElementById('hdrSub').textContent=`当前约${fW(total)} · 目标${fW0(target)} · 差${gap>0?fW0(gap):'达成🎉'}`;
-
-  // Cash
+  // ── 现金 ──
   const cashEl=document.getElementById('cashDisplay');
   if(editMode){
-    cashEl.innerHTML=`<div><input class="edit-input" type="number" step="100" value="${D.cash}" oninput="D.cash=parseFloat(this.value)||0;renderAll()"><div class="edit-label">人民币</div></div>`;
+    cashEl.innerHTML=`<div style="width:120px"><input class="ei" type="number" inputmode="numeric" step="100" value="${D.cash}" oninput="D.cash=+this.value||0;refreshCalc()"><div class="el">人民币 ¥</div></div>`;
   } else {
-    cashEl.innerHTML=`<div class="field-val">${fCNY(D.cash)}</div><div class="field-pnl pfl">应急备用金</div>`;
+    cashEl.innerHTML=`<div><div class="field-val">${fCNY(D.cash)}</div><div class="field-pnl pfl">应急备用金</div></div>`;
   }
 
-  // FX
-  const fxUsd=document.getElementById('fxUsdDisplay'), fxHkd=document.getElementById('fxHkdDisplay');
+  // ── 汇率 ──
+  const fuEl=document.getElementById('fxUsdDisplay'), fhEl=document.getElementById('fxHkdDisplay');
   if(editMode){
-    fxUsd.innerHTML=`<input class="edit-input" type="number" step="0.01" value="${D.fxUsd||7.25}" oninput="D.fxUsd=parseFloat(this.value)||7.25;renderAll()">`;
-    fxHkd.innerHTML=`<input class="edit-input" type="number" step="0.001" value="${D.fxHkd||0.930}" oninput="D.fxHkd=parseFloat(this.value)||0.930;renderAll()">`;
+    fuEl.innerHTML=`<div style="width:100px"><input class="ei" type="number" inputmode="decimal" step="0.01" value="${(+D.fxUsd||7.25).toFixed(2)}" oninput="D.fxUsd=+this.value||7.25;refreshCalc()"><div class="el">汇率</div></div>`;
+    fhEl.innerHTML=`<div style="width:100px"><input class="ei" type="number" inputmode="decimal" step="0.001" value="${(+D.fxHkd||0.930).toFixed(3)}" oninput="D.fxHkd=+this.value||0.930;refreshCalc()"><div class="el">汇率</div></div>`;
   } else {
-    fxUsd.innerHTML=`<div class="field-val">${(D.fxUsd||7.25).toFixed(2)}</div>`;
-    fxHkd.innerHTML=`<div class="field-val">${(D.fxHkd||0.930).toFixed(3)}</div>`;
+    fuEl.innerHTML=`<div class="field-val">${(+D.fxUsd||7.25).toFixed(2)}</div>`;
+    fhEl.innerHTML=`<div class="field-val">${(+D.fxHkd||0.930).toFixed(3)}</div>`;
   }
 
-  // Alipay
+  // ── 支付宝 ──
   const aliEl=document.getElementById('alipayList');
-  const fx=D.fxUsd||USD_CNY_DEFAULT;
-  aliEl.innerHTML=D.alipay.map((item,i)=>`
-    <div class="field-row">
-      <div class="field-icon" style="background:${item.bg}">${item.icon}</div>
-      <div class="field-info">
-        ${editMode?`<input style="border:1px solid #5a9fe0;border-radius:6px;padding:3px 6px;font-size:12px;width:100%;font-family:inherit" value="${item.name}" oninput="D.alipay[${i}].name=this.value">`:`<div class="field-name">${item.name}</div>`}
-        <div class="field-sub">${item.sub}</div>
-      </div>
-      <div class="field-right" style="display:flex;align-items:center;gap:6px">
-        ${editMode?`
-          <div>
-            <input class="edit-input" type="number" step="100" value="${item.val}" oninput="D.alipay[${i}].val=parseFloat(this.value)||0;renderAll()"><div class="edit-label">当前市值¥</div>
-          </div>
+  aliEl.innerHTML=D.alipay.map((item,i)=>{
+    const up=item.pnl>=0;
+    if(editMode) return `
+      <div class="eblock">
+        <div class="erow1">
+          <div class="field-icon" style="background:${item.bg};flex-shrink:0">${item.icon}</div>
+          <input class="name-inp" value="${item.name}" oninput="D.alipay[${i}].name=this.value" placeholder="持仓名称">
           <button class="del-btn" onclick="D.alipay.splice(${i},1);renderAll()">×</button>
-        `:`
-          <div>
-            <div class="field-val">${curMode==='cny'?fCNY(item.val):fCNY(item.val)}</div>
-            <div class="field-pnl ${item.up?'pup':'pdn'}">${item.up?'+':''}${fCNY(item.pnl)} · ${item.up?'+':''}${item.pct}%${item.up?'↑':'↓'}</div>
-          </div>
-        `}
-      </div>
-    </div>`).join('');
-  const aliSum=D.alipay.reduce((s,i)=>s+i.val,0);
-  aliEl.innerHTML+=`<div class="divider"></div><div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--muted)">支付宝合计</span><span style="font-size:16px;font-weight:600">${fCNY(aliSum)}</span></div>`;
+        </div>
+        <div class="erow2" style="padding-left:42px">
+          <div class="ecol"><div class="el2">💰 市值 ¥</div><input class="ei" type="number" inputmode="numeric" step="100" value="${item.val}" oninput="D.alipay[${i}].val=+this.value||0;refreshCalc()"></div>
+          <div class="ecol"><div class="el2">📈 盈亏 ¥</div><input class="ei" type="number" inputmode="decimal" step="0.01" value="${item.pnl}" oninput="D.alipay[${i}].pnl=+this.value||0;refreshCalc()"></div>
+          <div class="ecol"><div class="el2">% 涨跌</div><input class="ei" type="number" inputmode="decimal" step="0.1" value="${item.pct}" oninput="D.alipay[${i}].pct=+this.value||0;refreshCalc()"></div>
+        </div>
+      </div>`;
+    return `
+      <div class="field-row">
+        <div class="field-icon" style="background:${item.bg}">${item.icon}</div>
+        <div class="field-info"><div class="field-name">${item.name}</div><div class="field-sub">${item.sub}</div></div>
+        <div class="field-right">
+          <div class="field-val">${fCNY(item.val)}</div>
+          <div class="field-pnl ${up?'pup':'pdn'}">${up?'+':''}${fCNY(item.pnl)} · ${item.pct>=0?'+':''}${item.pct}%${up?'↑':'↓'}</div>
+        </div>
+      </div>`;
+  }).join('');
 
-  // US stocks
+  // ── 美股 ──
   const usEl=document.getElementById('usList');
-  usEl.innerHTML=D.us.map((s,i)=>`
-    <div class="stock-row">
-      <span class="stock-ticker">${editMode?`<input style="border:1px solid #5a9fe0;border-radius:4px;padding:2px 4px;font-size:11px;width:50px;font-family:inherit;font-weight:600" value="${s.ticker}" oninput="D.us[${i}].ticker=this.value">`:s.ticker}</span>
-      <span class="stock-name">${editMode?`<input style="border:1px solid #5a9fe0;border-radius:4px;padding:2px 4px;font-size:12px;width:90px;font-family:inherit" value="${s.name}" oninput="D.us[${i}].name=this.value">`:s.name}</span>
-      <div class="stock-right" style="display:flex;align-items:center;gap:6px">
-        ${editMode?`
-          <div>
-            <input class="edit-input" type="number" step="0.01" value="${Math.abs(s.pnl)}" oninput="D.us[${i}].pnl=(${s.up?1:-1})*parseFloat(this.value)||0;renderAll()" style="width:90px">
-            <div class="edit-label">持仓盈亏 USD</div>
-          </div>
+  usEl.innerHTML=D.us.map((s,i)=>{
+    const up=s.pnl>=0;
+    if(editMode) return `
+      <div class="eblock">
+        <div class="erow1">
+          <input class="ticker-inp" value="${s.ticker}" oninput="D.us[${i}].ticker=this.value" placeholder="代码">
+          <input class="name-inp" value="${s.name}" oninput="D.us[${i}].name=this.value" placeholder="名称">
           <button class="del-btn" onclick="D.us.splice(${i},1);renderAll()">×</button>
-        `:`
-          <div>
-            <div class="stock-pnl ${s.up?'pup':'pdn'}">${curMode==='orig'?(s.up?'+$':'-$')+Math.abs(s.pnl).toFixed(2):(s.up?'+¥':'-¥')+Math.round(Math.abs(s.pnl)*fx).toLocaleString()}</div>
-            <div class="stock-pct ${s.up?'pup':'pdn'}">${s.up?'+':''}${s.pct}%${s.up?'↑':'↓'}</div>
-          </div>
-        `}
-      </div>
-    </div>`).join('');
+        </div>
+        <div class="erow2">
+          <div class="ecol"><div class="el2">盈亏 USD</div><input class="ei" type="number" inputmode="decimal" step="0.01" value="${s.pnl}" oninput="D.us[${i}].pnl=+this.value||0;refreshCalc()"></div>
+          <div class="ecol"><div class="el2">涨跌 %</div><input class="ei" type="number" inputmode="decimal" step="0.01" value="${s.pct}" oninput="D.us[${i}].pct=+this.value||0;refreshCalc()"></div>
+        </div>
+      </div>`;
+    return `
+      <div class="stock-row">
+        <span class="stock-ticker">${s.ticker}</span>
+        <span class="stock-name">${s.name}</span>
+        <div style="text-align:right">
+          <div class="stock-pnl ${up?'pup':'pdn'}">${curMode==='orig'?(up?'+$':'-$')+Math.abs(s.pnl).toFixed(2):(up?'+¥':'-¥')+Math.round(Math.abs(s.pnl)*fx).toLocaleString()}</div>
+          <div class="stock-pct ${up?'pup':'pdn'}">${s.pct>=0?'+':''}${s.pct}%${up?'↑':'↓'}</div>
+        </div>
+      </div>`;
+  }).join('');
 
-  // US mkt val
-  const usMkt=document.getElementById('mooTotal');
+  // 美股总市值
+  const usMktRow=document.getElementById('usMktValRow');
   if(editMode){
-    usEl.innerHTML+=`<div class="divider"></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;color:var(--muted)">美股总市值 USD</span><input class="edit-input" type="number" step="0.01" value="${D.usMktVal}" oninput="D.usMktVal=parseFloat(this.value)||0;renderAll()"></div>`;
+    usMktRow.innerHTML=`<div style="margin-top:8px"><div class="el2">美股账户总市值 USD</div><input class="ei" type="number" inputmode="decimal" step="0.01" value="${D.usMktVal}" oninput="D.usMktVal=+this.value||0;refreshCalc()"></div>`;
   } else {
-    usEl.innerHTML+=`<div class="divider"></div><div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--muted)">美股总市值</span><div style="text-align:right"><div style="font-size:14px;font-weight:600">${curMode==='orig'?'$'+D.usMktVal.toFixed(2):'¥'+Math.round(D.usMktVal*fx).toLocaleString()}</div></div></div>`;
+    usMktRow.innerHTML=`<div class="divider"></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--muted)">美股总市值</span><span style="font-size:14px;font-weight:600">${curMode==='orig'?'$'+(+D.usMktVal).toFixed(2):'¥'+Math.round((+D.usMktVal)*fx).toLocaleString()}</span></div>`;
   }
 
-  // HK stocks
+  // ── 港股 ──
   const hkEl=document.getElementById('hkList');
-  hkEl.innerHTML=D.hk.map((s,i)=>`
-    <div class="stock-row">
-      <span class="stock-ticker">${editMode?`<input style="border:1px solid #5a9fe0;border-radius:4px;padding:2px 4px;font-size:11px;width:52px;font-family:inherit;font-weight:600" value="${s.ticker}" oninput="D.hk[${i}].ticker=this.value">`:s.ticker}</span>
-      <span class="stock-name">${editMode?`<input style="border:1px solid #5a9fe0;border-radius:4px;padding:2px 4px;font-size:12px;width:90px;font-family:inherit" value="${s.name}" oninput="D.hk[${i}].name=this.value">`:s.name}</span>
-      <div class="stock-right" style="display:flex;align-items:center;gap:6px">
-        ${editMode?`
-          <div>
-            <input class="edit-input" type="number" step="1" value="${Math.abs(s.pnl)}" oninput="D.hk[${i}].pnl=(${s.up?1:-1})*parseFloat(this.value)||0;renderAll()" style="width:90px">
-            <div class="edit-label">盈亏 HKD</div>
-          </div>
+  hkEl.innerHTML=D.hk.map((s,i)=>{
+    const up=s.pnl>=0;
+    if(editMode) return `
+      <div class="eblock">
+        <div class="erow1">
+          <input class="ticker-inp" value="${s.ticker}" oninput="D.hk[${i}].ticker=this.value" placeholder="代码">
+          <input class="name-inp" value="${s.name}" oninput="D.hk[${i}].name=this.value" placeholder="名称">
           <button class="del-btn" onclick="D.hk.splice(${i},1);renderAll()">×</button>
-        `:`
-          <div>
-            <div class="stock-pnl ${s.up?'pup':'pdn'}">${curMode==='orig'?(s.up?'+HK$':'-HK$')+Math.abs(s.pnl).toLocaleString():(s.up?'+¥':'-¥')+Math.round(Math.abs(s.pnl)*(D.fxHkd||HKD_CNY_DEFAULT)).toLocaleString()}</div>
-            <div class="stock-pct ${s.up?'pup':'pdn'}">${s.up?'+':''}${s.pct}%${s.up?'↑':'↓'}</div>
-          </div>
-        `}
-      </div>
-    </div>`).join('');
+        </div>
+        <div class="erow2">
+          <div class="ecol"><div class="el2">盈亏 HKD</div><input class="ei" type="number" inputmode="numeric" step="1" value="${s.pnl}" oninput="D.hk[${i}].pnl=+this.value||0;refreshCalc()"></div>
+          <div class="ecol"><div class="el2">涨跌 %</div><input class="ei" type="number" inputmode="decimal" step="0.01" value="${s.pct}" oninput="D.hk[${i}].pct=+this.value||0;refreshCalc()"></div>
+        </div>
+      </div>`;
+    return `
+      <div class="stock-row">
+        <span class="stock-ticker">${s.ticker}</span>
+        <span class="stock-name">${s.name}</span>
+        <div style="text-align:right">
+          <div class="stock-pnl ${up?'pup':'pdn'}">${curMode==='orig'?(up?'+HK$':'-HK$')+Math.abs(s.pnl).toLocaleString():(up?'+¥':'-¥')+Math.round(Math.abs(s.pnl)*hkfx).toLocaleString()}</div>
+          <div class="stock-pct ${up?'pup':'pdn'}">${s.pct>=0?'+':''}${s.pct}%${up?'↑':'↓'}</div>
+        </div>
+      </div>`;
+  }).join('');
 
+  // 港股总市值
+  const hkMktRow=document.getElementById('hkMktValRow');
   if(editMode){
-    hkEl.innerHTML+=`<div class="divider"></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;color:var(--muted)">港股总市值 HKD</span><input class="edit-input" type="number" step="1" value="${D.hkMktVal}" oninput="D.hkMktVal=parseFloat(this.value)||0;renderAll()"></div>`;
+    hkMktRow.innerHTML=`<div style="margin-top:8px"><div class="el2">港股账户总市值 HKD</div><input class="ei" type="number" inputmode="numeric" step="1" value="${D.hkMktVal}" oninput="D.hkMktVal=+this.value||0;refreshCalc()"></div>`;
   } else {
-    hkEl.innerHTML+=`<div class="divider"></div><div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--muted)">港股总市值</span><div style="text-align:right"><div style="font-size:14px;font-weight:600">${curMode==='orig'?'HK$'+D.hkMktVal.toLocaleString():'¥'+Math.round(D.hkMktVal*(D.fxHkd||HKD_CNY_DEFAULT)).toLocaleString()}</div></div></div>`;
+    hkMktRow.innerHTML=`<div class="divider"></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--muted)">港股总市值</span><span style="font-size:14px;font-weight:600">${curMode==='orig'?'HK$'+(+D.hkMktVal).toLocaleString():'¥'+Math.round((+D.hkMktVal)*hkfx).toLocaleString()}</span></div>`;
   }
 
-  // moo cash
+  // moomoo现金
   const mcEl=document.getElementById('mooCashDisplay');
-  mcEl.innerHTML=editMode?`<input class="edit-input" type="number" step="0.01" value="${D.mooCash}" oninput="D.mooCash=parseFloat(this.value)||0;renderAll()">`:`<div style="font-size:14px;font-weight:600">${curMode==='orig'?'$'+D.mooCash.toFixed(2):'¥'+Math.round(D.mooCash*fx).toLocaleString()}</div>`;
+  if(editMode){
+    mcEl.innerHTML=`<div style="width:120px"><input class="ei" type="number" inputmode="decimal" step="0.01" value="${D.mooCash}" oninput="D.mooCash=+this.value||0;refreshCalc()"><div class="el">USD</div></div>`;
+  } else {
+    mcEl.innerHTML=`<span style="font-size:14px;font-weight:600">${curMode==='orig'?'$'+(+D.mooCash).toFixed(2):'¥'+Math.round((+D.mooCash)*fx).toLocaleString()}</span>`;
+  }
 
-  const mooVal=(D.usMktVal+D.mooCash)*fx+D.hkMktVal*(D.fxHkd||HKD_CNY_DEFAULT);
-  document.getElementById('mooTotal').textContent=curMode==='orig'?'$'+(D.usMktVal+D.mooCash).toFixed(2):'¥'+Math.round(mooVal).toLocaleString();
-  document.getElementById('mooCNY').textContent=curMode==='orig'?'≈¥'+Math.round(mooVal).toLocaleString():'moomoo人民币合计';
-
-  // Target
+  // ── 目标 ──
   const tEl=document.getElementById('targetDisplay'), mEl=document.getElementById('monthsDisplay');
   if(editMode){
-    tEl.innerHTML=`<input class="edit-input" type="number" step="1000" value="${D.targetAsset}" oninput="D.targetAsset=parseFloat(this.value)||130000;renderAll()"><div class="edit-label">人民币</div>`;
-    mEl.innerHTML=`<input class="edit-input" type="number" step="1" value="${D.monthsToWork||14}" oninput="D.monthsToWork=parseInt(this.value)||14;renderAll()"><div class="edit-label">剩余月数</div>`;
+    tEl.innerHTML=`<div style="width:120px"><input class="ei" type="number" inputmode="numeric" step="1000" value="${D.targetAsset}" oninput="D.targetAsset=+this.value||130000;refreshCalc()"><div class="el">人民币 ¥</div></div>`;
+    mEl.innerHTML=`<div style="width:90px"><input class="ei" type="number" inputmode="numeric" step="1" value="${D.monthsToWork||14}" oninput="D.monthsToWork=+this.value||14;refreshCalc()"><div class="el">剩余月数</div></div>`;
   } else {
     tEl.innerHTML=`<div class="field-val c-g">${fW0(D.targetAsset)}</div>`;
     mEl.innerHTML=`<div class="field-val">${D.monthsToWork||14}个月</div>`;
   }
-  const mo=D.monthsToWork||14;
-  document.getElementById('preWorkFill').style.width=Math.min(100,total/D.targetAsset*100)+'%';
-  document.getElementById('prePct').textContent=Math.round(Math.min(100,total/D.targetAsset*100))+'%';
-  document.getElementById('preGap').textContent=gap>0?fW0(gap):'已达成🎉';
-  document.getElementById('monthNeed').textContent=gap>0?fW0(gap/mo)+'/月':'--';
 
-  // DCA
-  const d1=D.dca1||288, d2=D.dca2||388, dtotal=d1+d2;
+  // ── 黄金定投 ──
   const d1El=document.getElementById('dca1Display'), d2El=document.getElementById('dca2Display');
   if(editMode){
-    d1El.innerHTML=`<input class="edit-input" type="number" step="1" value="${d1}" oninput="D.dca1=parseInt(this.value)||0;renderAll()"><div class="edit-label">元/周</div>`;
-    d2El.innerHTML=`<input class="edit-input" type="number" step="1" value="${d2}" oninput="D.dca2=parseInt(this.value)||0;renderAll()"><div class="edit-label">元/周</div>`;
+    d1El.innerHTML=`<div style="width:110px"><input class="ei" type="number" inputmode="numeric" step="1" value="${D.dca1||288}" oninput="D.dca1=+this.value||0;refreshCalc()"><div class="el">元 / 周</div></div>`;
+    d2El.innerHTML=`<div style="width:110px"><input class="ei" type="number" inputmode="numeric" step="1" value="${D.dca2||388}" oninput="D.dca2=+this.value||0;refreshCalc()"><div class="el">元 / 周</div></div>`;
   } else {
-    d1El.innerHTML=`<div style="font-size:16px;font-weight:600;color:var(--gold)">¥${d1}/周</div>`;
-    d2El.innerHTML=`<div style="font-size:16px;font-weight:600;color:var(--gold)">¥${d2}/周</div>`;
+    d1El.innerHTML=`<div style="font-size:16px;font-weight:600;color:var(--gold)">¥${D.dca1||288}/周</div>`;
+    d2El.innerHTML=`<div style="font-size:16px;font-weight:600;color:var(--gold)">¥${D.dca2||388}/周</div>`;
   }
-  document.getElementById('dcaTotal').textContent='¥'+dtotal+'/周';
-  document.getElementById('dcaMonthly').textContent='¥'+Math.round(dtotal*4.33).toLocaleString();
-  document.getElementById('dcaYearly').textContent='¥'+Math.round(dtotal*52).toLocaleString();
 
-  // Update time
-  document.getElementById('updateTime').textContent='数据更新于 '+(D.updateDate||'--')+' · USD¥'+(D.fxUsd||7.25)+' HKD¥'+(D.fxHkd||0.930);
+  refreshCalc();
 }
 
 function addAlipayItem(){
-  D.alipay.push({name:'新持仓',sub:'',icon:'📊',bg:'#f0ede8',val:0,pnl:0,pct:0,up:true});
+  D.alipay.push({name:'新持仓',sub:'',icon:'📊',bg:'#f0ede8',val:0,pnl:0,pct:0});
   renderAll();
 }
-function addStock(market){
-  if(market==='us') D.us.push({ticker:'NEW',name:'新股票',pnl:0,pct:0,up:true});
-  else D.hk.push({ticker:'00000',name:'新股票',pnl:0,pct:0,up:true});
+function addStock(mkt){
+  if(mkt==='us') D.us.push({ticker:'NEW',name:'新股票',pnl:0,pct:0});
+  else D.hk.push({ticker:'00000',name:'新股票',pnl:0,pct:0});
   renderAll();
 }
-
 function setCur(mode,el){
   curMode=mode;
   document.querySelectorAll('.cur-btn').forEach(b=>b.classList.remove('active'));
@@ -624,7 +673,7 @@ function showPage(name,el){
   el.classList.add('active');
 }
 
-// Plan
+// ── Plan ──────────────────────────────────────────────────────────
 const risks=[
   {max:6,cls:'rt-low',label:'保守 · 货币基金水平'},
   {max:10,cls:'rt-low',label:'稳健 · 指数基金长期均值'},
@@ -636,11 +685,11 @@ const risks=[
 function getRisk(r){for(let v of risks)if(r<=v.max)return v;return risks[risks.length-1];}
 
 function calcPlan(init,sal,grow,saveR,invP,invR){
-  let ip=init*invP,cp=init*(1-invP),yrs=[];
+  let ip=init*invP, cp=init*(1-invP), yrs=[];
   for(let i=0;i<5;i++){
-    let gy=Math.max(0,i-2),salary=sal*Math.pow(1+grow,gy);
-    let at=salary*0.82,saved=at*saveR,toInv=saved*invP,toCash=saved*(1-invP),living=at-saved;
-    ip=(ip+toInv)*(1+invR);cp+=toCash;
+    let gy=Math.max(0,i-2), salary=sal*Math.pow(1+grow,gy);
+    let at=salary*0.82, saved=at*saveR, toInv=saved*invP, toCash=saved*(1-invP), living=at-saved;
+    ip=(ip+toInv)*(1+invR); cp+=toCash;
     yrs.push({year:2028+i,salary,saved,toInv,toCash,living,ip,cp,total:ip+cp,raised:i>=3});
   }
   return yrs;
@@ -662,11 +711,11 @@ function renderPlan(){
   document.getElementById('p_invr').textContent=Math.round(invR*100)+'%';
   document.getElementById('planStart').textContent=(init/10000).toFixed(1)+'万';
 
-  const rr=Math.round(invR*100),risk=getRisk(rr);
+  const rr=Math.round(invR*100), risk=getRisk(rr);
   const rt=document.getElementById('riskTag');
-  rt.className='risk-tag '+risk.cls;rt.textContent=risk.label;
+  rt.className='risk-tag '+risk.cls; rt.textContent=risk.label;
 
-  const ip2=Math.round(invP*100),cp2=100-ip2;
+  const ip2=Math.round(invP*100), cp2=100-ip2;
   document.getElementById('splitBar2').innerHTML=`<div style="flex:${ip2};background:#3da874"></div><div style="flex:${cp2};background:#e8e6e0"></div>`;
   document.getElementById('splitLbl2').innerHTML=`<span style="flex:${ip2};color:var(--green);font-size:11px">投资 ${ip2}%</span><span style="flex:${cp2};text-align:right;color:var(--muted);font-size:11px">备用 ${cp2}%</span>`;
 
