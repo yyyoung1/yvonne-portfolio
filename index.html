@@ -259,15 +259,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
 <div id="pg-dca" class="page">
   <div style="padding-top:12px">
   <div class="card" id="card-dca">
-    <div class="card-title">🥇 黄金定投 <span class="edit-hint" id="hint-dca"></span></div>
-    <div class="field-row">
-      <div class="field-info"><div class="field-name">易方达黄金ETF联接A</div></div>
-      <div id="dca1Display"></div>
-    </div>
-    <div class="field-row" style="border-bottom:none;padding-bottom:0">
-      <div class="field-info"><div class="field-name">易方达黄金ETF联接C</div></div>
-      <div id="dca2Display"></div>
-    </div>
+    <div class="card-title">📅 定投计划 <span class="edit-hint" id="hint-dca"></span></div>
+    <div id="dcaList"></div>
+    <button class="add-btn" id="addDcaBtn" style="display:none" onclick="addDcaItem()">+ 新建定投</button>
     <div style="background:var(--gold-l);border-radius:10px;padding:10px 12px;margin-top:12px;display:flex;justify-content:space-between;align-items:center">
       <div class="field-name" style="font-weight:600">每周合计</div>
       <div style="font-size:20px;font-weight:700;color:var(--gold)" id="dcaTotal"></div>
@@ -388,7 +382,7 @@ const DEFAULT={
   ],
   hkMktVal:13261,
   mooCash:775.76,
-  dca1:288, dca2:388,
+  dca:[{name:'易方达黄金ETF联接A',amount:288},{name:'易方达黄金ETF联接C',amount:388}],
   updateDate:'2026年5月28日',
 };
 
@@ -480,7 +474,7 @@ function refreshCalc(){
   document.getElementById('monthNeed').textContent=gap>0?fW0(gap/mo)+'/月':'--';
 
   // DCA totals
-  const d1=+D.dca1||0, d2=+D.dca2||0, dt=d1+d2;
+  const dt=(D.dca||[]).reduce((s,i)=>s+(+i.amount||0),0);
   document.getElementById('dcaTotal').textContent='¥'+dt+'/周';
   document.getElementById('dcaMonthly').textContent='¥'+Math.round(dt*4.33).toLocaleString();
   document.getElementById('dcaYearly').textContent='¥'+Math.round(dt*52).toLocaleString();
@@ -638,19 +632,36 @@ function renderAll(){
     mEl.innerHTML=`<div class="field-val">${D.monthsToWork||14}个月</div>`;
   }
 
-  // ── 黄金定投 ──
-  const d1El=document.getElementById('dca1Display'), d2El=document.getElementById('dca2Display');
-  if(editMode){
-    d1El.innerHTML=`<div style="width:110px"><input class="ei" type="number" inputmode="numeric" step="1" value="${D.dca1||288}" oninput="D.dca1=+this.value||0;refreshCalc()"><div class="el">元 / 周</div></div>`;
-    d2El.innerHTML=`<div style="width:110px"><input class="ei" type="number" inputmode="numeric" step="1" value="${D.dca2||388}" oninput="D.dca2=+this.value||0;refreshCalc()"><div class="el">元 / 周</div></div>`;
-  } else {
-    d1El.innerHTML=`<div style="font-size:16px;font-weight:600;color:var(--gold)">¥${D.dca1||288}/周</div>`;
-    d2El.innerHTML=`<div style="font-size:16px;font-weight:600;color:var(--gold)">¥${D.dca2||388}/周</div>`;
-  }
+  // ── 定投列表 ──
+  document.getElementById('addDcaBtn').style.display=editMode?'block':'none';
+  const dcaEl=document.getElementById('dcaList');
+  if(!D.dca) D.dca=[];
+  dcaEl.innerHTML=D.dca.map((item,i)=>{
+    if(editMode) return `
+      <div class="eblock">
+        <div class="erow1">
+          <input class="name-inp" value="${item.name}" oninput="D.dca[${i}].name=this.value" placeholder="定投名称">
+          <button class="del-btn" onclick="D.dca.splice(${i},1);renderAll()">×</button>
+        </div>
+        <div class="erow2">
+          <div class="ecol"><div class="el2">每周金额 ¥</div><input class="ei" type="number" inputmode="numeric" step="1" value="${item.amount}" oninput="D.dca[${i}].amount=+this.value||0;refreshCalc()"></div>
+          <div class="ecol" style="display:flex;align-items:flex-end;padding-bottom:2px"><span style="font-size:12px;color:var(--muted)">每月≈¥${Math.round((+item.amount||0)*4.33).toLocaleString()}</span></div>
+        </div>
+      </div>`;
+    return `<div class="field-row">
+      <div class="field-info"><div class="field-name">${item.name}</div></div>
+      <div style="font-size:15px;font-weight:600;color:var(--gold)">¥${item.amount}/周</div>
+    </div>`;
+  }).join('');
 
   refreshCalc();
 }
 
+function addDcaItem(){
+  if(!D.dca) D.dca=[];
+  D.dca.push({name:'新定投',amount:0});
+  renderAll();
+}
 function addAlipayItem(){
   D.alipay.push({name:'新持仓',sub:'',icon:'📊',bg:'#f0ede8',val:0,pnl:0,pct:0});
   renderAll();
